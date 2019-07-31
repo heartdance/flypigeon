@@ -1,6 +1,6 @@
 package com.cherlshall.flypigeon.service;
 
-import com.cherlshall.flypigeon.config.Configuration;
+import com.cherlshall.flypigeon.config.UdpServiceConfiguration;
 import com.cherlshall.flypigeon.register.RegisterCenter;
 
 import java.net.DatagramPacket;
@@ -18,12 +18,16 @@ import java.util.concurrent.Executors;
 public class UdpSendService implements SendService {
 
     private DatagramSocket server;
-    private Configuration configuration;
+    private UdpServiceConfiguration configuration;
     private boolean startup;
     private ExecutorService pool = Executors.newCachedThreadPool();
     private RegisterCenter registerCenter;
 
-    public UdpSendService(Configuration configuration) {
+    public UdpSendService() {
+        this.configuration = new UdpServiceConfiguration();
+    }
+
+    public UdpSendService(UdpServiceConfiguration configuration) {
         this.configuration = configuration;
     }
 
@@ -31,7 +35,6 @@ public class UdpSendService implements SendService {
     public boolean startup(RegisterCenter registerCenter) {
         this.startup = true;
         this.registerCenter = registerCenter;
-        this.registerCenter.setConfiguration(configuration);
         try {
             if (configuration.getIp() != null) {
                 // 包装IP地址

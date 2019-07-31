@@ -1,6 +1,6 @@
 package com.cherlshall.flypigeon.register;
 
-import com.cherlshall.flypigeon.config.Configuration;
+import com.cherlshall.flypigeon.config.RegisterCenterConfiguration;
 import com.cherlshall.flypigeon.exception.CommandExecuteException;
 import com.cherlshall.flypigeon.exception.CommandRegisterException;
 import com.cherlshall.flypigeon.register.command.CommandLeaf;
@@ -21,8 +21,16 @@ import java.util.Set;
  */
 public class RegisterCenter {
 
-    private Configuration configuration;
+    private final RegisterCenterConfiguration configuration;
     private final CommandTree commandTree = new CommandTree();
+
+    public RegisterCenter() {
+        this.configuration = new RegisterCenterConfiguration();
+    }
+
+    public RegisterCenter(RegisterCenterConfiguration configuration) {
+        this.configuration = configuration;
+    }
 
     public void register(String command, ResponseWithCommand executor) {
         String[] commandItems = splitCommand(command);
@@ -75,10 +83,6 @@ public class RegisterCenter {
             throw new CommandRegisterException("command cannot empty, command = " + command);
         }
         return commandTrim.split("\\s+");
-    }
-
-    public void setConfiguration(Configuration configuration) {
-        this.configuration = configuration;
     }
 
 }

@@ -1,29 +1,15 @@
 package com.cherlshall.flypigeon.config;
 
-import com.cherlshall.flypigeon.config.responsehandler.UserResponseHandler;
 import com.cherlshall.flypigeon.config.responsehandler.CommandResponseHandler;
 import com.cherlshall.flypigeon.config.responsehandler.ExceptionResponseHandler;
+import com.cherlshall.flypigeon.config.responsehandler.UserResponseHandler;
 import com.cherlshall.flypigeon.exception.CommandExecuteException;
 
 /**
  * @author hu.tengfei
- * @since 2019/7/30
+ * @since 2019/7/31
  */
-public class Configuration {
-    /**
-     * server ip 默认为本机
-     */
-    private String ip;
-
-    /**
-     * server port
-     */
-    private int port = 10100;
-
-    /**
-     * 每条数据最大长度
-     */
-   private int maxBytes = 2048;
+public class RegisterCenterConfiguration {
 
     /**
      * 对使用者生成的响应再处理
@@ -58,30 +44,6 @@ public class Configuration {
         }
         return "error";
     };
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
-
-    public int getMaxBytes() {
-        return maxBytes;
-    }
-
-    public void setMaxBytes(int maxBytes) {
-        this.maxBytes = maxBytes;
-    }
 
     public UserResponseHandler getUserResponseHandler() {
         return userResponseHandler;
