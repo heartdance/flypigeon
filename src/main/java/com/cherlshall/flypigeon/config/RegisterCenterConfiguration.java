@@ -2,6 +2,7 @@ package com.cherlshall.flypigeon.config;
 
 import com.cherlshall.flypigeon.config.responsehandler.CommandResponseHandler;
 import com.cherlshall.flypigeon.config.responsehandler.ExceptionResponseHandler;
+import com.cherlshall.flypigeon.config.responsehandler.HelpResponseHandler;
 import com.cherlshall.flypigeon.config.responsehandler.UserResponseHandler;
 import com.cherlshall.flypigeon.exception.CommandExecuteException;
 
@@ -45,6 +46,16 @@ public class RegisterCenterConfiguration {
         return "error";
     };
 
+    /**
+     * 帮助菜单命令名称
+     */
+    private String helpCmdName = "help";
+
+    /**
+     * 帮助菜单返回内容
+     */
+    private HelpResponseHandler helpResponseHandler = (command, tree) -> tree.getTrunkNames().toString();
+
     public UserResponseHandler getUserResponseHandler() {
         return userResponseHandler;
     }
@@ -67,5 +78,21 @@ public class RegisterCenterConfiguration {
 
     public void setExceptionResponseHandler(ExceptionResponseHandler exceptionResponseHandler) {
         this.exceptionResponseHandler = exceptionResponseHandler;
+    }
+
+    public String getHelpCmdName() {
+        return helpCmdName;
+    }
+
+    public void setHelpCmdName(String helpCmdName) {
+        this.helpCmdName = helpCmdName;
+    }
+
+    public HelpResponseHandler getHelpResponseHandler() {
+        return helpResponseHandler;
+    }
+
+    public void setHelpResponseHandler(HelpResponseHandler helpResponseHandler) {
+        this.helpResponseHandler = helpResponseHandler;
     }
 }

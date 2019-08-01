@@ -24,6 +24,8 @@ public class UdpTest {
 
         // 启动client
         UdpClient udpClient = new UdpClient("127.0.0.1", 10101, 2048);
+        String responseHelp = udpClient.sendAndReceive("help");
+        System.out.println("responseHelp = " + responseHelp);
         String responseHello = udpClient.sendAndReceive("hello");
         System.out.println("responseHello = " + responseHello);
         String responseWorld = udpClient.sendAndReceive("hello world");

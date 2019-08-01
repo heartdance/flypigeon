@@ -33,7 +33,7 @@ public class RegisterCenter {
     }
 
     public void register(String command, ResponseWithCommand executor) {
-        String[] commandItems = splitCommand(command);
+        String[] commandItems = splitRegisterCommand(command);
         CommandTree currentNode = this.commandTree;
         int lastIndex = commandItems.length - 1;
         for (int i = 0; i < lastIndex; i++) {
@@ -48,7 +48,10 @@ public class RegisterCenter {
 
     public String execute(String command) {
         try {
-            String[] commandItems = splitCommand(command);
+            String[] commandItems = splitExecuteCommand(command);
+            if (commandItems[0].equals(configuration.getHelpCmdName())) {
+                return configuration.getHelpResponseHandler().handle(command, commandTree);
+            }
             CommandTree currentNode = this.commandTree;
             int lastIndex = commandItems.length - 1;
             for (int i = 0; i < lastIndex; i++) {
@@ -74,13 +77,29 @@ public class RegisterCenter {
 
     }
 
-    private String[] splitCommand(String command) {
+    private String[] splitRegisterCommand(String command) {
         if (command == null) {
             throw new CommandRegisterException("command cannot null");
         }
         String commandTrim = command.trim();
         if (commandTrim.isEmpty()) {
             throw new CommandRegisterException("command cannot empty, command = " + command);
+        }
+        String[] commandItems = commandTrim.split("\\s+");
+        String helpCmdName = configuration.getHelpCmdName();
+        if (commandItems[0].equals(helpCmdName)) {
+            throw new CommandRegisterException("command cannot start with help command, help command = " + helpCmdName);
+        }
+        return commandItems;
+    }
+
+    private String[] splitExecuteCommand(String command) {
+        if (command == null) {
+            throw new CommandExecuteException("command cannot null");
+        }
+        String commandTrim = command.trim();
+        if (commandTrim.isEmpty()) {
+            throw new CommandExecuteException("command cannot empty, command = " + command);
         }
         return commandTrim.split("\\s+");
     }
